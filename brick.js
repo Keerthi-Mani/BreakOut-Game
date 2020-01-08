@@ -10,10 +10,23 @@ var dx = 2;
 var dy = -2;
 // Hold the radius of the drawn circle and be used for calculations
 var ballRadius = 10;
+//Paddle to hit the ball
+var paddleHeight = 10;
+var paddleWidth = 75;
+var paddleX = (canvas.width - paddleWidth) / 2;
 
+//function  that will draw the ball on the screen
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+  ctx.fillStyle = "#0095DD";
+  ctx.fill();
+  ctx.closePath();
+}
+//function that will draw the paddle on the screen
+function drawPaddle() {
+  ctx.beginPath();
+  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
