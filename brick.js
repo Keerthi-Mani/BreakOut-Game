@@ -29,6 +29,11 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 
+//Count
+var score = 0;
+// Lives
+var lives = 3;
+
 var bricks = [];
 for (var c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
@@ -37,23 +42,10 @@ for (var c = 0; c < brickColumnCount; c++) {
   }
 }
 
-//Count
-var score = 0;
-// Lives
-var lives = 3;
-
 //Event Listener
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
-
-//Anchoring the paddle movement to the mouse movement
-function mouseMoveHandler(e) {
-  var relativeX = e.clientX - canvas.offsetLeft;
-  if (relativeX > 0 && relativeX < canvas.width) {
-    paddleX = relativeX - paddleWidth / 2;
-  }
-}
 
 //When the keydown is fired the keyDownHandler() function will be executed
 function keyDownHandler(e) {
@@ -70,6 +62,14 @@ function keyUpHandler(e) {
     rightPressed = false;
   } else if (e.key == "Left" || e.key == "ArrowLeft") {
     leftPressed = false;
+  }
+}
+
+//Anchoring the paddle movement to the mouse movement
+function mouseMoveHandler(e) {
+  var relativeX = e.clientX - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    paddleX = relativeX - paddleWidth / 2;
   }
 }
 
@@ -99,20 +99,6 @@ function collisionDetection() {
       }
     }
   }
-}
-
-//To create and update the score display
-function drawScore() {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "#0095DD";
-  ctx.fillText("Score: " + score, 8, 20);
-}
-
-//Drawing the life counter looks almost the same as drawing the score counter
-function drawLives() {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "#0095DD";
-  ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
 }
 
 //function  that will draw the ball on the screen
@@ -152,6 +138,20 @@ function drawBricks() {
   }
 }
 
+//To create and update the score display
+function drawScore() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText("Score: " + score, 8, 20);
+}
+
+//Drawing the life counter looks almost the same as drawing the score counter
+function drawLives() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+}
+
 //function will be called every 10 milliseconds forever, or until we stop it
 function draw() {
   //the ball move without a trail
@@ -162,6 +162,7 @@ function draw() {
   drawScore();
   drawLives();
   collisionDetection();
+
   //Bouncing off the left and right
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
