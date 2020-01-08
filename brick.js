@@ -37,6 +37,9 @@ for (var c = 0; c < brickColumnCount; c++) {
   }
 }
 
+//Count
+var score = 0;
+
 //Event Listener
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -74,17 +77,26 @@ function collisionDetection() {
         ) {
           dy = -dy;
           b.status == 0;
+          //function to increment the value of the score variable each time a collision is detected
+          score++;
         }
       }
     }
   }
 }
 
+//To create and update the score display
+function drawScore() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText("Score: " + score, 8, 20);
+}
+
 //function  that will draw the ball on the screen
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = "yellow";
+  ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
 }
@@ -93,7 +105,7 @@ function drawBall() {
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
 }
@@ -109,7 +121,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         ctx.beginPath();
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
       }
@@ -124,6 +136,7 @@ function draw() {
   drawBricks();
   drawBall();
   drawPaddle();
+  drawScore();
   collisionDetection();
   //Bouncing off the left and right
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
