@@ -43,6 +43,15 @@ var score = 0;
 //Event Listener
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+//Anchoring the paddle movement to the mouse movement
+function mouseMoveHandler(e) {
+  var relativeX = e.clientX - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    paddleX = relativeX - paddleWidth / 2;
+  }
+}
 
 //When the keydown is fired the keyDownHandler() function will be executed
 function keyDownHandler(e) {
