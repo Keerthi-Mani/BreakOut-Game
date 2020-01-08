@@ -8,10 +8,12 @@ var y = canvas.height - 30;
 //To make it appear that the ball is moving
 var dx = 2;
 var dy = -2;
+// Hold the radius of the drawn circle and be used for calculations
+var ballRadius = 10;
 
 function drawBall() {
   ctx.beginPath();
-  ctx.arc(x, y, 10, 0, Math.PI * 2);
+  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
@@ -21,6 +23,14 @@ function draw() {
   //the ball move without a trail
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBall();
+  //Bouncing off the left and right
+  if (x + dx > canvas.width || x + dx < 0) {
+    dx = -dx;
+  }
+  //Bouncing off the top and bottom
+  if (y + dy > canvas.height || y + dy < 0) {
+    dy = -dy;
+  }
   x += dx;
   y += dy;
 }
