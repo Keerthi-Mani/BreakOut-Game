@@ -10,13 +10,24 @@ var dx = 2;
 var dy = -2;
 // Hold the radius of the drawn circle and be used for calculations
 var ballRadius = 10;
-//Paddle to hit the ball
+
+//Setting up the Paddle to hit the ball
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width - paddleWidth) / 2;
 //Move the paddle left and right
 var rightPressed = false;
 var leftPressed = false;
+
+//Setting up the brick variables
+var brickRowCount = 3;
+var brickColumnCount = 5;
+var brickWidth = 75;
+var brickHeight = 20;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+
 //Event Listener
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
