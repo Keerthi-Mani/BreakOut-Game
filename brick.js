@@ -79,6 +79,12 @@ function collisionDetection() {
           b.status == 0;
           //function to increment the value of the score variable each time a collision is detected
           score++;
+          //Displaying a winning message when all bricks have been destroyed
+          if (score == brickRowCount * brickColumnCount) {
+            alert("YOU WIN, CONGRATULATIONS!");
+            document.location.reload();
+            clearInterval(interval);
+          }
         }
       }
     }
