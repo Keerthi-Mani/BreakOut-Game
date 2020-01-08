@@ -39,6 +39,8 @@ for (var c = 0; c < brickColumnCount; c++) {
 
 //Count
 var score = 0;
+// Lives
+var lives = 3;
 
 //Event Listener
 document.addEventListener("keydown", keyDownHandler, false);
@@ -92,7 +94,6 @@ function collisionDetection() {
           if (score == brickRowCount * brickColumnCount) {
             alert("YOU WIN, CONGRATULATIONS!");
             document.location.reload();
-            clearInterval(interval);
           }
         }
       }
@@ -105,6 +106,13 @@ function drawScore() {
   ctx.font = "16px Arial";
   ctx.fillStyle = "#0095DD";
   ctx.fillText("Score: " + score, 8, 20);
+}
+
+//Drawing the life counter looks almost the same as drawing the score counter
+function drawLives() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
 }
 
 //function  that will draw the ball on the screen
@@ -152,6 +160,7 @@ function draw() {
   drawBall();
   drawPaddle();
   drawScore();
+  drawLives();
   collisionDetection();
   //Bouncing off the left and right
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -165,9 +174,17 @@ function draw() {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy;
     } else {
-      alert("GAME OVER");
-      document.location.reload();
-      clearInterval(interval);
+      lives--;
+      if (!lives) {
+        alert("GAME OVER");
+        document.location.reload();
+      } else {
+        x = canvas.width / 2;
+        y = canvas.height - 30;
+        dx = 3;
+        dy = -3;
+        paddleX = (canvas.width - paddleWidth) / 2;
+      }
     }
   }
   if (rightPressed && paddleX < canvas.width - paddleWidth) {
@@ -177,5 +194,6 @@ function draw() {
   }
   x += dx;
   y += dy;
+  requestAnimationFrame(draw);
 }
-var interval = setInterval(draw, 10);
+draw();
