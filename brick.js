@@ -14,7 +14,28 @@ var ballRadius = 10;
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width - paddleWidth) / 2;
-
+//Move the paddle left and right
+var rightPressed = false;
+var leftPressed = false;
+//Event Listener
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+//When the keydown is fired the keyDownHandler() function will be executed
+function keyDownHandler(e) {
+  if (e.key == "Right" || e.key == "ArrowRight") {
+    rightPressed = true;
+  } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    leftPressed = true;
+  }
+}
+//When the keyup is fired the keyDownHandler() function will be executed
+function keyUpHandler(e) {
+  if (e.key == "Right" || e.key == "ArrowRight") {
+    rightPressed = false;
+  } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    leftPressed = false;
+  }
+}
 //function  that will draw the ball on the screen
 function drawBall() {
   ctx.beginPath();
@@ -36,6 +57,7 @@ function draw() {
   //the ball move without a trail
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBall();
+  drawPaddle();
   //Bouncing off the left and right
   if (x + dx > canvas.width || x + dx < 0) {
     dx = -dx;
@@ -44,7 +66,19 @@ function draw() {
   if (y + dy > canvas.height || y + dy < 0) {
     dy = -dy;
   }
+  if (rightPressed) {
+    paddleX += 7;
+    if (paddleX + paddleWidth > canvas.width) {
+      paddleX = canvas.width - paddleWidth;
+    }
+  } else if (leftPressed) {
+    paddleX -= 7;
+    if (paddleX < 0) {
+      paddleX = 0;
+    }
+  }
   x += dx;
   y += dy;
 }
+
 setInterval(draw, 10);
