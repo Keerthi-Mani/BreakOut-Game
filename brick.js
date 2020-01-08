@@ -36,6 +36,7 @@ for (var c = 0; c < brickColumnCount; c++) {
     bricks[c][r] = { x: 0, y: 0 };
   }
 }
+
 //Event Listener
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -48,6 +49,7 @@ function keyDownHandler(e) {
     leftPressed = true;
   }
 }
+
 //When the keyup is fired the keyDownHandler() function will be executed
 function keyUpHandler(e) {
   if (e.key == "Right" || e.key == "ArrowRight") {
@@ -56,6 +58,20 @@ function keyUpHandler(e) {
     leftPressed = false;
   }
 }
+
+//storing the brick object in every loop of the collision detection:
+function collisionDetection() {
+  for (var c = 0; c < brickColumnCount; c++) {
+    for (var r = 0; r < brickRowCount; r++) {
+      var b = bricks[c][r];
+      // calculations
+      if (x > b.x && xMb.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+        dy = -dy;
+      }
+    }
+  }
+}
+
 //function  that will draw the ball on the screen
 function drawBall() {
   ctx.beginPath();
@@ -64,6 +80,7 @@ function drawBall() {
   ctx.fill();
   ctx.closePath();
 }
+
 //function that will draw the paddle on the screen
 function drawPaddle() {
   ctx.beginPath();
@@ -72,6 +89,7 @@ function drawPaddle() {
   ctx.fill();
   ctx.closePath();
 }
+
 //create a function to loop through all the bricks in the array and draw them on the screen
 function drawBricks() {
   for (var c = 0; c < brickColumnCount; c++) {
@@ -88,6 +106,7 @@ function drawBricks() {
     }
   }
 }
+
 //function will be called every 10 milliseconds forever, or until we stop it
 function draw() {
   //the ball move without a trail
