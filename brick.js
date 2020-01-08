@@ -9,14 +9,18 @@ var y = canvas.height - 30;
 var dx = 2;
 var dy = -2;
 
-//function will be called every 10 milliseconds forever, or until we stop it
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, 10, 0, Math.PI * 2);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
+}
+//function will be called every 10 milliseconds forever, or until we stop it
+function draw() {
+  //the ball move without a trail
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBall();
   x += dx;
   y += dy;
 }
