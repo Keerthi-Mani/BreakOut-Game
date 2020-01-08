@@ -65,8 +65,16 @@ function collisionDetection() {
     for (var r = 0; r < brickRowCount; r++) {
       var b = bricks[c][r];
       // calculations
-      if (x > b.x && xMb.x + brickWidth && y > b.y && y < b.y + brickHeight) {
-        dy = -dy;
+      if (b.status == 1) {
+        if (
+          x > b.x &&
+          x < b.x + brickWidth &&
+          y > b.y &&
+          y < b.y + brickHeight
+        ) {
+          dy = -dy;
+          b.status == 0;
+        }
       }
     }
   }
@@ -76,7 +84,7 @@ function collisionDetection() {
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = "#0095DD";
+  ctx.fillStyle = "yellow";
   ctx.fill();
   ctx.closePath();
 }
@@ -85,7 +93,7 @@ function drawBall() {
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = "#0095DD";
+  ctx.fillStyle = "red";
   ctx.fill();
   ctx.closePath();
 }
@@ -101,7 +109,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         ctx.beginPath();
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = "red";
         ctx.fill();
         ctx.closePath();
       }
@@ -116,6 +124,7 @@ function draw() {
   drawBricks();
   drawBall();
   drawPaddle();
+  collisionDetection();
   //Bouncing off the left and right
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
