@@ -20,6 +20,7 @@ var leftPressed = false;
 //Event Listener
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
 //When the keydown is fired the keyDownHandler() function will be executed
 function keyDownHandler(e) {
   if (e.key == "Right" || e.key == "ArrowRight") {
@@ -59,26 +60,29 @@ function draw() {
   drawBall();
   drawPaddle();
   //Bouncing off the left and right
-  if (x + dx > canvas.width || x + dx < 0) {
+  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
-  //Bouncing off the top and bottom
-  if (y + dy > canvas.height || y + dy < 0) {
+  if (y + dy < ballRadius) {
     dy = -dy;
   }
-  if (rightPressed) {
+  //Bouncing off the top and bottom
+  else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      alert("GAME OVER");
+      document.location.reload();
+      clearInterval(interval);
+    }
+  }
+  if (rightPressed && paddleX < canvas.width - paddleWidth) {
     paddleX += 7;
-    if (paddleX + paddleWidth > canvas.width) {
-      paddleX = canvas.width - paddleWidth;
-    }
-  } else if (leftPressed) {
+  } else if (leftPressed && paddleX > 0) {
     paddleX -= 7;
-    if (paddleX < 0) {
-      paddleX = 0;
-    }
   }
   x += dx;
   y += dy;
 }
 
-setInterval(draw, 10);
+var interval = setInterval(draw, 10);
