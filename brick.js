@@ -87,7 +87,7 @@ function collisionDetection() {
           y < b.y + brickHeight
         ) {
           dy = -dy;
-          b.status == 0;
+          b.status = 0;
           //function to increment the value of the score variable each time a collision is detected
           score++;
           //Displaying a winning message when all bricks have been destroyed
